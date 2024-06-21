@@ -1,1 +1,1 @@
-# javaServer
+# grpc-sample
