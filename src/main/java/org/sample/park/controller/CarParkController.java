@@ -42,8 +42,11 @@ public class CarParkController {
         Float valeur;
 
         try {
+            logger.info("Parsing testId: {}", parts[0].trim());
             testId = UUID.fromString(parts[0].trim());
+            logger.info("Parsing capteurId: {}", parts[1].trim());
             capteurId = UUID.fromString(parts[1].trim());
+            logger.info("Parsing valeur: {}", parts[2].trim());
             valeur = Float.parseFloat(parts[2].trim());
         } catch (IllegalArgumentException e) {
             logger.error("Error parsing result: {}", result, e);
