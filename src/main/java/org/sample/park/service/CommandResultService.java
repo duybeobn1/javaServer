@@ -35,9 +35,9 @@ public class CommandResultService {
             test = new Test();
             test.setId(testId);
             test.setTempsDebut(new Timestamp(System.currentTimeMillis()));
-            test.setTempsFinTheorique(new Timestamp(System.currentTimeMillis()+3600000));
-            test.setDescription("Automatically created test");
-            // Set other necessary fields for the Test entity here
+            test.setTempsFinTheorique(new Timestamp(System.currentTimeMillis() + 3600000)); // Example: 1 hour later
+            test.setDescription(generateUniqueDescription("Automatically created test"));
+            // Set default values for other non-nullable fields if needed
             testRepository.save(test);
             logger.info("Created new Test entity with ID: {}", testId);
         }
@@ -52,5 +52,14 @@ public class CommandResultService {
         valeurCapteurRepository.save(valeurCapteur);
 
         logger.info("Saved result to database: Test ID: {}, Capteur ID: {}, Valeur: {}", testId, capteurId, valeur);
+    }
+
+    private String generateUniqueDescription(String baseDescription) {
+        String description = baseDescription;
+        int counter = 1;
+        while (testRepository.existsByDescription(description)) {
+            description = baseDescription + " " + counter++;
+        }
+        return description;
     }
 }
