@@ -3,6 +3,7 @@ package org.sample.park.service;
 import org.sample.park.model.Test;
 import org.sample.park.model.Capteurs;
 import org.sample.park.model.ValeurCapteur;
+import org.sample.park.repository.TestRepository;
 import org.sample.park.repository.ValeurCapteurRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,16 +22,34 @@ public class CommandResultService {
     @Autowired
     private ValeurCapteurRepository valeurCapteurRepository;
 
+    @Autowired
+    private TestRepository testRepository;
+
     public void saveResult(UUID testId, UUID capteurId, Float valeur) {
+        // Check if the Test entity exists, create if it doesn't
+        Optional<Test> testOptional = testRepository.findById(testId);
+        Test test;
+        if (testOptional.isPresent()) {
+            test = testOptional.get();
+        } else {
+            test = new Test();
+            test.setId(testId);
+            test.setTempsDebut(new Timestamp(System.currentTimeMillis()));
+            test.setDescription("Automatically created test");
+            // Set other necessary fields for the Test entity here
+            testRepository.save(test);
+            logger.info("Created new Test entity with ID: {}", testId);
+        }
+
         ValeurCapteur valeurCapteur = new ValeurCapteur();
         valeurCapteur.setId(UUID.randomUUID());
-        valeurCapteur.setTest(new Test(testId));
+        valeurCapteur.setTest(test);
         valeurCapteur.setCapteur(new Capteurs(capteurId));
         valeurCapteur.setValeur(valeur);
         valeurCapteur.setTemps(new Timestamp(System.currentTimeMillis()));
-        
+
         valeurCapteurRepository.save(valeurCapteur);
-        
+
         logger.info("Saved result to database: Test ID: {}, Capteur ID: {}, Valeur: {}", testId, capteurId, valeur);
     }
 }
