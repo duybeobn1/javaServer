@@ -22,7 +22,7 @@ public class CarParkGrpcClient {
     private final CarParkServiceGrpc.CarParkServiceStub asyncStub;
 
     public CarParkGrpcClient() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("192.168.1.166", 50051)
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("192.168.1.14", 50051)
                 .usePlaintext()
                 .build();
         blockingStub = CarParkServiceGrpc.newBlockingStub(channel);
