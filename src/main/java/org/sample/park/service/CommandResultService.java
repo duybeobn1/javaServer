@@ -35,6 +35,7 @@ public class CommandResultService {
             test = new Test();
             test.setId(testId);
             test.setTempsDebut(new Timestamp(System.currentTimeMillis()));
+            test.setTempsFinTheorique(new Timestamp(System.currentTimeMillis()+3600000));
             test.setDescription("Automatically created test");
             // Set other necessary fields for the Test entity here
             testRepository.save(test);
