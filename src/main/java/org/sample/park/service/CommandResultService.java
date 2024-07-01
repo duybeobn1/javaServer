@@ -18,7 +18,7 @@ public class CommandResultService {
 
     public void saveResult(UUID testId, UUID capteurId, Float valeur) {
         ValeurCapteur valeurCapteur = new ValeurCapteur();
-        valeurCapteur.setId(UUID.randomUUID());
+        valeurCapteur.setId(UUID.fromString("550e8400-e29b-41d4-a716-446655440001"));
         valeurCapteur.setTest(new Test(testId));
         valeurCapteur.setCapteur(new Capteurs(capteurId));
         valeurCapteur.setValeur(valeur);
