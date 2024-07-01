@@ -39,6 +39,18 @@ public final class CarParkServiceGrpc {
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               org.sample.park.CommandResponse.getDefaultInstance()))
           .build();
+  @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
+  public static final io.grpc.MethodDescriptor<org.sample.park.Empty,
+      org.sample.park.LogMessage> METHOD_STREAM_LOGS =
+      io.grpc.MethodDescriptor.<org.sample.park.Empty, org.sample.park.LogMessage>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+          .setFullMethodName(generateFullMethodName(
+              "park.CarParkService", "StreamLogs"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              org.sample.park.Empty.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              org.sample.park.LogMessage.getDefaultInstance()))
+          .build();
 
   /**
    * Creates a new async stub that supports all call types for the service
@@ -74,6 +86,13 @@ public final class CarParkServiceGrpc {
       asyncUnimplementedUnaryCall(METHOD_PROCESS_COMMAND, responseObserver);
     }
 
+    /**
+     */
+    public void streamLogs(org.sample.park.Empty request,
+        io.grpc.stub.StreamObserver<org.sample.park.LogMessage> responseObserver) {
+      asyncUnimplementedUnaryCall(METHOD_STREAM_LOGS, responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -83,6 +102,13 @@ public final class CarParkServiceGrpc {
                 org.sample.park.CommandRequest,
                 org.sample.park.CommandResponse>(
                   this, METHODID_PROCESS_COMMAND)))
+          .addMethod(
+            METHOD_STREAM_LOGS,
+            asyncServerStreamingCall(
+              new MethodHandlers<
+                org.sample.park.Empty,
+                org.sample.park.LogMessage>(
+                  this, METHODID_STREAM_LOGS)))
           .build();
     }
   }
@@ -112,6 +138,14 @@ public final class CarParkServiceGrpc {
       asyncUnaryCall(
           getChannel().newCall(METHOD_PROCESS_COMMAND, getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void streamLogs(org.sample.park.Empty request,
+        io.grpc.stub.StreamObserver<org.sample.park.LogMessage> responseObserver) {
+      asyncServerStreamingCall(
+          getChannel().newCall(METHOD_STREAM_LOGS, getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -137,6 +171,14 @@ public final class CarParkServiceGrpc {
     public org.sample.park.CommandResponse processCommand(org.sample.park.CommandRequest request) {
       return blockingUnaryCall(
           getChannel(), METHOD_PROCESS_COMMAND, getCallOptions(), request);
+    }
+
+    /**
+     */
+    public java.util.Iterator<org.sample.park.LogMessage> streamLogs(
+        org.sample.park.Empty request) {
+      return blockingServerStreamingCall(
+          getChannel(), METHOD_STREAM_LOGS, getCallOptions(), request);
     }
   }
 
@@ -168,6 +210,7 @@ public final class CarParkServiceGrpc {
   }
 
   private static final int METHODID_PROCESS_COMMAND = 0;
+  private static final int METHODID_STREAM_LOGS = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -189,6 +232,10 @@ public final class CarParkServiceGrpc {
         case METHODID_PROCESS_COMMAND:
           serviceImpl.processCommand((org.sample.park.CommandRequest) request,
               (io.grpc.stub.StreamObserver<org.sample.park.CommandResponse>) responseObserver);
+          break;
+        case METHODID_STREAM_LOGS:
+          serviceImpl.streamLogs((org.sample.park.Empty) request,
+              (io.grpc.stub.StreamObserver<org.sample.park.LogMessage>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -224,6 +271,7 @@ public final class CarParkServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new CarParkServiceDescriptorSupplier())
               .addMethod(METHOD_PROCESS_COMMAND)
+              .addMethod(METHOD_STREAM_LOGS)
               .build();
         }
       }

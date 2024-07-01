@@ -24,6 +24,16 @@ public final class CarParkServiceProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_park_CommandResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_park_LogMessage_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_park_LogMessage_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_park_Empty_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_park_Empty_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -35,10 +45,13 @@ public final class CarParkServiceProto {
     java.lang.String[] descriptorData = {
       "\n\rCarPark.proto\022\004park\"!\n\016CommandRequest\022" +
       "\017\n\007command\030\001 \001(\t\"!\n\017CommandResponse\022\016\n\006r" +
-      "esult\030\001 \001(\t2O\n\016CarParkService\022=\n\016Process" +
-      "Command\022\024.park.CommandRequest\032\025.park.Com" +
-      "mandResponseB(\n\017org.sample.parkB\023CarPark" +
-      "ServiceProtoP\001b\006proto3"
+      "esult\030\001 \001(\t\"0\n\nLogMessage\022\017\n\007message\030\001 \001" +
+      "(\t\022\021\n\ttimestamp\030\002 \001(\t\"\007\n\005Empty2~\n\016CarPar" +
+      "kService\022=\n\016ProcessCommand\022\024.park.Comman" +
+      "dRequest\032\025.park.CommandResponse\022-\n\nStrea" +
+      "mLogs\022\013.park.Empty\032\020.park.LogMessage0\001B(" +
+      "\n\017org.sample.parkB\023CarParkServiceProtoP\001" +
+      "b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -64,6 +77,18 @@ public final class CarParkServiceProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_park_CommandResponse_descriptor,
         new java.lang.String[] { "Result", });
+    internal_static_park_LogMessage_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_park_LogMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_park_LogMessage_descriptor,
+        new java.lang.String[] { "Message", "Timestamp", });
+    internal_static_park_Empty_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_park_Empty_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_park_Empty_descriptor,
+        new java.lang.String[] { });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
