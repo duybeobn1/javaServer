@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/valeur-capteur")
+@RequestMapping("/api/valeur-capteurs")
 @CrossOrigin(origins = {"http://localhost:4200", "http://192.168.1.96:4200"})
 public class ValeurCapteurController {
 
