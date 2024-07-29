@@ -1,17 +1,19 @@
 package org.sample.park.controller;
 
 import org.sample.park.client.CarParkGrpcClient;
+import org.sample.park.model.Test;
 import org.sample.park.service.CommandResultService;
+import org.sample.park.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/test")
+@RequestMapping("/api/tests")
 @CrossOrigin(origins = {"http://localhost:4200", "http://192.168.1.96:4200"})
-
 public class TestController {
 
     @Autowired
@@ -19,6 +21,14 @@ public class TestController {
 
     @Autowired
     private CommandResultService commandResultService;
+
+    @Autowired
+    private TestService testService;
+
+    @GetMapping
+    public List<Test> getAllTests() {
+        return testService.getAllTests();
+    }
 
     @PostMapping
     public String createTest(@RequestBody Map<String, String> command) {
