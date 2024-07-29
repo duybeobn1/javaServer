@@ -12,6 +12,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/park")
+@CrossOrigin(origins = {"http://localhost:4200", "http://192.168.1.96:4200"})
+
 public class CarParkController {
 
     private static final Logger logger = LoggerFactory.getLogger(CarParkController.class);

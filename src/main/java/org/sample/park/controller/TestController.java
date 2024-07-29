@@ -10,6 +10,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/test")
+@CrossOrigin(origins = {"http://localhost:4200", "http://192.168.1.96:4200"})
+
 public class TestController {
 
     @Autowired

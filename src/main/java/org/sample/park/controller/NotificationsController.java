@@ -3,6 +3,7 @@ package org.sample.park.controller;
 import org.sample.park.model.Notifications;
 import org.sample.park.service.NotificationsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/notifications")
+@CrossOrigin(origins = {"http://localhost:4200", "http://192.168.1.96:4200"})
+
 public class NotificationsController {
 
     @Autowired
