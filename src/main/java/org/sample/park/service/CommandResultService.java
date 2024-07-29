@@ -25,8 +25,10 @@ public class CommandResultService {
     @Autowired
     private TestRepository testRepository;
 
+    @Autowired
+    private NotificationService notificationService;
+
     public void saveResult(UUID testId, UUID capteurId, Float valeur) {
-        // Check if the Test entity exists, create if it doesn't
         Optional<Test> testOptional = testRepository.findById(testId);
         Test test;
         if (testOptional.isPresent()) {
@@ -37,7 +39,6 @@ public class CommandResultService {
             test.setTempsDebut(new Timestamp(System.currentTimeMillis()));
             test.setTempsFinTheorique(new Timestamp(System.currentTimeMillis() + 3600000)); // Example: 1 hour later
             test.setDescription(generateUniqueDescription("Automatically created test"));
-            // Set default values for other non-nullable fields if needed
             testRepository.save(test);
             logger.info("Created new Test entity with ID: {}", testId);
         }
@@ -50,6 +51,9 @@ public class CommandResultService {
         valeurCapteur.setTemps(new Timestamp(System.currentTimeMillis()));
 
         valeurCapteurRepository.save(valeurCapteur);
+
+        boolean success = valeur > 0;
+        notificationService.createNotificationForTest(test, success);
 
         logger.info("Saved result to database: Test ID: {}, Capteur ID: {}, Valeur: {}", testId, capteurId, valeur);
     }
