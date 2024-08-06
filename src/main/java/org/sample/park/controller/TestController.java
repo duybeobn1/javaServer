@@ -1,10 +1,13 @@
 package org.sample.park.controller;
 
 import org.sample.park.client.CarParkGrpcClient;
+import org.sample.park.model.Test;
 import org.sample.park.service.CommandResultService;
+import org.sample.park.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -19,15 +22,18 @@ public class TestController {
     @Autowired
     private CommandResultService commandResultService;
 
+    @Autowired
+    private TestService testService;
+
+    @GetMapping
+    public List<Test> getAllTests() {
+        return testService.getAllTests();
+    }
+
     @PostMapping
-    public String handleTestCommand(@RequestBody Map<String, String> command) {
+    public String createTest(@RequestBody Map<String, String> command) {
         String cmd = command.get("command");
         String result = carParkGrpcClient.processCommand(cmd);
-
-        // For start/stop commands, simply return the result
-        if (cmd.equals("start") || cmd.equals("stop")) {
-            return result;
-        }
 
         // Assume result is a comma-separated string of testId, capteurId, and valeur
         String[] parts = result.split(",");
@@ -49,10 +55,5 @@ public class TestController {
 
         commandResultService.saveResult(testId, capteurId, valeur);
         return "Test result saved: " + result;
-    }
-
-    @GetMapping("/status")
-    public String getSensorStatus() {
-        return carParkGrpcClient.getStatus();
     }
 }
