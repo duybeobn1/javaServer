@@ -9,7 +9,7 @@ package park;
 service CarParkService {
     rpc ProcessCommand (CommandRequest) returns (CommandResponse);
     rpc StreamLogs (Empty) returns (stream LogMessage);
-
+    rpc GetStatus (StatusRequest) returns (CommandResponse);
 }
 
 message CommandRequest {
@@ -18,6 +18,10 @@ message CommandRequest {
 
 message CommandResponse {
     string result = 1;
+}
+
+message StatusRequest {
+    // Empty request message
 }
 
 message LogMessage {

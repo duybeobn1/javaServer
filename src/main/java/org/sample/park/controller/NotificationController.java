@@ -11,7 +11,6 @@ import java.util.List;
 @RequestMapping("/api/notifications")
 @CrossOrigin(origins = {"http://localhost:4200", "http://192.168.1.96:4200"})
 public class NotificationController {
-
     @Autowired
     private NotificationService notificationService;
 
