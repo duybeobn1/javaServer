@@ -5,11 +5,9 @@ import java.util.UUID;
 public class TestResult {
     private UUID testId;
     private UUID capteurId;
-    private float valeur;
+    private Float valeur;
 
-    // Constructor, getters and setters
-
-    public TestResult(UUID testId, UUID capteurId, float valeur) {
+    public TestResult(UUID testId, UUID capteurId, Float valeur) {
         this.testId = testId;
         this.capteurId = capteurId;
         this.valeur = valeur;
@@ -19,23 +17,11 @@ public class TestResult {
         return testId;
     }
 
-    public void setTestId(UUID testId) {
-        this.testId = testId;
-    }
-
     public UUID getCapteurId() {
         return capteurId;
     }
 
-    public void setCapteurId(UUID capteurId) {
-        this.capteurId = capteurId;
-    }
-
-    public float getValeur() {
+    public Float getValeur() {
         return valeur;
-    }
-
-    public void setValeur(float valeur) {
-        this.valeur = valeur;
     }
 }

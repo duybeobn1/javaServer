@@ -1,9 +1,9 @@
 package org.sample.park.service;
 
 import org.sample.park.model.Test;
+import org.sample.park.model.TestResult;
 import org.sample.park.model.Capteurs;
 import org.sample.park.model.ValeurCapteur;
-import org.sample.park.model.TestResult;
 import org.sample.park.repository.TestRepository;
 import org.sample.park.repository.ValeurCapteurRepository;
 import org.slf4j.Logger;
@@ -55,8 +55,8 @@ public class CommandResultService {
 
         valeurCapteurRepository.save(valeurCapteur);
 
-        TestResult result = new TestResult(testId, capteurId, valeur);
-        testResultService.addResult(result);
+        // Save the result to TestResultService
+        testResultService.addResult(new TestResult(testId, capteurId, valeur));
 
         logger.info("Saved result to database: Test ID: {}, Capteur ID: {}, Valeur: {}", testId, capteurId, valeur);
     }
