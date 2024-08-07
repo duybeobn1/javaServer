@@ -3,6 +3,7 @@ package org.sample.park.service;
 import org.sample.park.model.Test;
 import org.sample.park.model.Capteurs;
 import org.sample.park.model.ValeurCapteur;
+import org.sample.park.model.TestResult;
 import org.sample.park.repository.TestRepository;
 import org.sample.park.repository.ValeurCapteurRepository;
 import org.slf4j.Logger;
@@ -26,9 +27,10 @@ public class CommandResultService {
     private TestRepository testRepository;
 
     @Autowired
-    private NotificationService notificationService;
+    private TestResultService testResultService;
 
     public void saveResult(UUID testId, UUID capteurId, Float valeur) {
+        // Check if the Test entity exists, create if it doesn't
         Optional<Test> testOptional = testRepository.findById(testId);
         Test test;
         if (testOptional.isPresent()) {
@@ -39,6 +41,7 @@ public class CommandResultService {
             test.setTempsDebut(new Timestamp(System.currentTimeMillis()));
             test.setTempsFinTheorique(new Timestamp(System.currentTimeMillis() + 3600000)); // Example: 1 hour later
             test.setDescription(generateUniqueDescription("Automatically created test"));
+            // Set default values for other non-nullable fields if needed
             testRepository.save(test);
             logger.info("Created new Test entity with ID: {}", testId);
         }
@@ -52,8 +55,8 @@ public class CommandResultService {
 
         valeurCapteurRepository.save(valeurCapteur);
 
-        boolean success = valeur > 0;
-        notificationService.createNotificationForTest(test, success);
+        TestResult result = new TestResult(testId, capteurId, valeur);
+        testResultService.addResult(result);
 
         logger.info("Saved result to database: Test ID: {}, Capteur ID: {}, Valeur: {}", testId, capteurId, valeur);
     }

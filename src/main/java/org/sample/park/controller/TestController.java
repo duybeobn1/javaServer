@@ -1,9 +1,9 @@
 package org.sample.park.controller;
 
 import org.sample.park.client.CarParkGrpcClient;
-import org.sample.park.model.Test;
+import org.sample.park.model.TestResult;
 import org.sample.park.service.CommandResultService;
-import org.sample.park.service.TestService;
+import org.sample.park.service.TestResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,17 +23,17 @@ public class TestController {
     private CommandResultService commandResultService;
 
     @Autowired
-    private TestService testService;
-
-    @GetMapping
-    public List<Test> getAllTests() {
-        return testService.getAllTests();
-    }
+    private TestResultService testResultService;
 
     @PostMapping
-    public String createTest(@RequestBody Map<String, String> command) {
+    public String handleTestCommand(@RequestBody Map<String, String> command) {
         String cmd = command.get("command");
         String result = carParkGrpcClient.processCommand(cmd);
+
+        // For start/stop/read commands, simply return the result
+        if (cmd.equals("start") || cmd.equals("stop") || cmd.equals("read")) {
+            return result;
+        }
 
         // Assume result is a comma-separated string of testId, capteurId, and valeur
         String[] parts = result.split(",");
@@ -56,4 +56,14 @@ public class TestController {
         commandResultService.saveResult(testId, capteurId, valeur);
         return "Test result saved: " + result;
     }
+
+    @GetMapping("/recent")
+    public List<TestResult> getRecentResults() {
+        return testResultService.getRecentResults();
+    }
+
+    // @GetMapping("/status")
+    // public String getSensorStatus() {
+    //     return carParkGrpcClient.getStatus();
+    // }
 }
