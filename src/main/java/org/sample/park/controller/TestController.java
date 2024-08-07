@@ -1,9 +1,8 @@
 package org.sample.park.controller;
 
 import org.sample.park.client.CarParkGrpcClient;
-import org.sample.park.model.TestResult;
+import org.sample.park.model.ValeurCapteur;
 import org.sample.park.service.CommandResultService;
-import org.sample.park.service.TestResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +20,6 @@ public class TestController {
 
     @Autowired
     private CommandResultService commandResultService;
-
-    @Autowired
-    private TestResultService testResultService;
 
     @PostMapping
     public Map<String, String> createTest(@RequestBody Map<String, String> command) {
@@ -58,7 +54,7 @@ public class TestController {
     }
 
     @GetMapping("/recent")
-    public List<TestResult> getRecentResults() {
-        return testResultService.getRecentResults();
+    public List<ValeurCapteur> getRecentResults() {
+        return commandResultService.getRecentResults();
     }
 }
